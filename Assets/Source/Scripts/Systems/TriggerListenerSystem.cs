@@ -10,35 +10,38 @@ namespace Game.Systems
 {
     public static class TriggerListenerSystem
     {
-        private static Dictionary<Type, List<object>> _listenersByType;
+        private static Dictionary<Type, List<object>> _listenersBySignal;
+        private static Dictionary<Type, List<object>> _listenersWithDataBySignal;
 
         public static void AddListener<T>(IListener<T> listener) where T : ISignal
         {
-            _listenersByType ??= new Dictionary<Type, List<object>>();
+            _listenersBySignal ??= new Dictionary<Type, List<object>>();
+            _listenersWithDataBySignal ??= new Dictionary<Type, List<object>>();
 
             var type = typeof(T);
-            if (_listenersByType.ContainsKey(type))
+
+            if (_listenersBySignal.ContainsKey(type))
             {
-                if (!_listenersByType[type].Contains(listener))
-                    _listenersByType[type].Add(listener);
+                if (!_listenersBySignal[type].Contains(listener))
+                    _listenersBySignal[type].Add(listener);
                 else
                     Debug.LogWarning($"Listeners {type} contains in dictionary");
             }
             else
             {
-                _listenersByType.Add(type, new List<object>() { listener });
+                _listenersBySignal.Add(type, new List<object>() { listener });
             }
         }
 
-        public static void Trigger<T>() where T : struct, ISignal
+        public static void Trigger<T>(T signal) where T : struct, ISignal
         {
             var type = typeof(T);
-            if (_listenersByType.ContainsKey(type))
+            if (_listenersBySignal.ContainsKey(type))
             {
-                _listenersByType[type].ForEach(x =>
+                _listenersBySignal[type].ForEach(x =>
                 {
                     var listener = x as IListener<T>;
-                    listener.Trigger<T>();
+                    listener.Trigger(signal);
             });
                 return;
             }
@@ -48,7 +51,7 @@ namespace Game.Systems
 
         public static void RemoveListener<T>(IListener<T> listener) where T : ISignal
         {
-            foreach (var item in _listenersByType.Values)
+            foreach (var item in _listenersBySignal.Values)
             {
                 if (item.Contains(listener))
                     item.RemoveBySwap(item.IndexOf(listener));
@@ -57,12 +60,13 @@ namespace Game.Systems
 
         public static void ClearAllListeners()
         {
-            _listenersByType.Clear();
+            _listenersBySignal.Clear();
+            _listenersWithDataBySignal.Clear();
         }
     }
     
     public interface IListener<T> where T : ISignal
     {
-        void Trigger<T>();
+        void Trigger(T signal);
     }
 }

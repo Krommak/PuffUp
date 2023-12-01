@@ -9,23 +9,21 @@ namespace Game.Systems
 {
     public class LevelSystem : IInitializable, IListener<LoadLevel>
     {
-        private Player _player;
         private StaticData _staticData;
         private RuntimeData _runtimeData;
 
         private LevelMono _loadedLevel;
 
         [Inject]
-        public LevelSystem(Player player, StaticData staticData, RuntimeData runtimeData)
+        public LevelSystem(StaticData staticData, RuntimeData runtimeData)
         {
-            _player = player;
             _staticData = staticData;
             _runtimeData = runtimeData;
         }
 
         private void LoadCurrent()
         {
-            var level = _player.CurrentLevel;
+            var level = _runtimeData.Player.CurrentLevel;
 
             var totalLevels = _staticData.LevelsSettings.Levels.Length;
             var index = level;
@@ -37,13 +35,13 @@ namespace Game.Systems
 
             var levelSettings = _staticData.LevelsSettings.Levels[index];
 
-            _loadedLevel = GameObject.Instantiate(levelSettings.LevelPrefab);
+            _loadedLevel = GameObject.Instantiate<LevelMono>(levelSettings.LevelPrefab);
 
             _loadedLevel.Init();
 
             _runtimeData.LevelData = levelSettings;
 
-            TriggerListenerSystem.Trigger<LevelLoaded>();
+            TriggerListenerSystem.Trigger(new LevelLoaded());
         }
 
         public void Initialize()
@@ -53,7 +51,7 @@ namespace Game.Systems
             LoadCurrent();
         }
 
-        void IListener<LoadLevel>.Trigger<LoadLevel>()
+        void IListener<LoadLevel>.Trigger(LoadLevel loadLevel)
         {
             ReloadScene();
             LoadCurrent();

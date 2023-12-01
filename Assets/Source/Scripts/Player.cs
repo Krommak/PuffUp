@@ -5,7 +5,14 @@ namespace Game
 {
     public sealed class Player
     {
+        public int TurnCount = 5;
+        //{
+        //    get => PlayerPrefs.GetInt("TurnCount", 5);
+        //    set => PlayerPrefs.SetInt("TurnCount", value);
+        //}
+
         public IntValue Money;
+
         public int CurrentLevel
         {
             get => PlayerPrefs.GetInt("CurrentLevel", 0);

@@ -1,12 +1,19 @@
+using Game.MonoBehaviours;
 using System;
 using UnityEngine;
-using Zlodey;
 
 namespace Game.Data
 {
     [Serializable]
     public class RuntimeData
     {
+        public RuntimeData()
+        {
+            Player = new Player();
+            Block = new MaterialPropertyBlock();
+        }
+
+        public Player Player;
         public int LevelNum;
         public Level LevelData;
         //public GameState GameState;
@@ -17,7 +24,8 @@ namespace Game.Data
         public int LevelRoom = -1;
 
         public Unlocker Unlocker;
-        public IntValue TurnCount;
+
+        public BubbleMono ScaledBubble;
 
         public bool ChestActivated;
 
@@ -38,10 +46,5 @@ namespace Game.Data
                 OnUnlock?.Invoke();
             }
         }
-    }
-
-    public class Bubble
-    {
-        public int Value;
     }
 }

@@ -20,7 +20,23 @@ namespace Game.Signals
     {
     }
 
+    public struct BubbleComplete: ISignal
+    {
+        public int ObjectID;
+        public int BubbleScore;
+    }
+
     public struct LoadLevel : ISignal
     {
+    }
+
+    public struct ConnectToStack : ISignal
+    {
+        public int ObjectID;
+    }
+
+    public struct UpdatePadlockScore : ISignal
+    {
+        public int AddedScore;
     }
 }

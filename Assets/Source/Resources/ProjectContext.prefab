@@ -50,15 +50,14 @@ MonoBehaviour:
     _autorotateToLandscapeLeft: 0
     _autorotateToLandscapeRight: 0
     _orientation: 1
-  _gameSceneName: 
   _staticData:
-    TransparentMaterial: {fileID: 0}
-    VoodooMaterial: {fileID: 0}
+    GameSceneName: 
+    TransparentMaterial: {fileID: 2100000, guid: 0bd4faaae6d06834ca4caa077d2c0280, type: 2}
+    VoodooMaterial: {fileID: 2100000, guid: ec507d2226066614fa6bc6a39e6015ed, type: 2}
     LevelsSettings:
       Levels:
       - ClampSize: {x: 2.75, y: 4.5}
-        LevelPrefab: {fileID: 4941313145368858608, guid: 1f8c1090410b1474dbd72004cced9d30, type: 3}
-        TargetValueForWin: 100
+        LevelPrefab: {fileID: 8949854445233190385, guid: 1f8c1090410b1474dbd72004cced9d30, type: 3}
         BackgroundColor:
           BaseColor: {r: 0, g: 0, b: 0, a: 0}
           ShadowColor: {r: 0, g: 0, b: 0, a: 0}
@@ -70,8 +69,10 @@ MonoBehaviour:
           ShadowColor: {r: 0, g: 0, b: 0, a: 0}
         StartTurn: 0
     TimeToWinLevel: 1
-    PrefabBubble: {fileID: 0}
-    Colors: []
+    PrefabBubble: {fileID: 4021895739854897565, guid: 527cef8dfb578fa429de1c4a1c362b57, type: 3}
+    Colors:
+    - BaseColor: {r: 1, g: 0.5764706, b: 1, a: 0}
+      ShadowColor: {r: 0.48235297, g: 0.2901961, b: 0.50980395, a: 0}
     Tick: 0
     StartTurn: 5
     PrefabCoin: {fileID: 0}
@@ -80,7 +81,6 @@ MonoBehaviour:
     LevelData:
       ClampSize: {x: 0, y: 0}
       LevelPrefab: {fileID: 0}
-      TargetValueForWin: 0
       BackgroundColor:
         BaseColor: {r: 0, g: 0, b: 0, a: 0}
         ShadowColor: {r: 0, g: 0, b: 0, a: 0}
@@ -95,6 +95,7 @@ MonoBehaviour:
     MousePosition: {x: 0, y: 0, z: 0}
     DelayTime: 0
     LevelRoom: -1
+    ScaledBubble: {fileID: 0}
     ChestActivated: 0
 --- !u!1 &8140151711157576038
 GameObject:

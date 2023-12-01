@@ -21,11 +21,11 @@ namespace Game.Systems
 
             if (Input.GetMouseButtonDown(0))
             {
-                TriggerListenerSystem.Trigger<MouseDown>();
+                TriggerListenerSystem.Trigger(new MouseDown());
             }
             else if (Input.GetMouseButtonUp(0))
             {
-                TriggerListenerSystem.Trigger<MouseUp>();
+                TriggerListenerSystem.Trigger(new MouseUp());
             }
         }
     }

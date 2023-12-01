@@ -8,11 +8,13 @@ namespace Game.Systems
     public class CreateBubbleSystem : IListener<MouseDown>, IInitializable
     {
         private RuntimeData _runtimeData;
+        private StaticData _staticData;
 
         [Inject]
-        public CreateBubbleSystem(RuntimeData runtimeData)
+        public CreateBubbleSystem(RuntimeData runtimeData, StaticData staticData)
         {
             _runtimeData = runtimeData;
+            _staticData = staticData;
         }
 
         public void Initialize()
@@ -20,11 +22,18 @@ namespace Game.Systems
             TriggerListenerSystem.AddListener<MouseDown>(this);
         }
 
-        void IListener<MouseDown>.Trigger<MouseDown>()
+        void IListener<MouseDown>.Trigger(MouseDown down)
         {
             //if (_runtimeData.GameState != GameState.Playing) return;
 
-            var positionWorld = Camera.main.ScreenToWorldPoint(_runtimeData.MousePosition);
+            if (_runtimeData.Player.TurnCount == 0)
+            {
+                return;
+            }
+
+            var positionWorld = _runtimeData.MousePosition;
+            positionWorld.z = 10;
+            positionWorld = Camera.main.ScreenToWorldPoint(positionWorld);
 
             var level = _runtimeData.LevelData.ClampSize;
 
@@ -33,7 +42,6 @@ namespace Game.Systems
                 return;
             }
 
-            //LayerMask mask = LayerMask.GetMask("Obstacle");
             var hits = Physics2D.OverlapCircleAll(positionWorld, 0.1f);
 
             if (hits.Length > 0)
@@ -53,17 +61,10 @@ namespace Game.Systems
                 }
             }
 
-            if (_runtimeData.TurnCount == 0)
-            {
-                return;
-            }
+            _runtimeData.Player.TurnCount--;
 
-            _runtimeData.TurnCount--;
-            positionWorld.z = 5f;
-
-            //var bubbleActor = Object.Instantiate(_staticData.PrefabBubble, positionWorld, Quaternion.identity);
-
-            //bubbleActor.Init();
+            _runtimeData.ScaledBubble = Object.Instantiate(_staticData.PrefabBubble, positionWorld, Quaternion.identity);
+            TriggerListenerSystem.Trigger(new NewBubble());
         }
     }
 }

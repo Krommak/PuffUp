@@ -24,7 +24,7 @@ namespace Game.Data
         //[Layer] public int IgnoreLayer;
 
         [Header("Gameplay variable")] public float TimeToWinLevel = 1; //для примера - время в секундах после которого уровень выигрывается
-        public GameObject PrefabBubble;
+        public BubbleMono PrefabBubble;
         public SpecialColor[] Colors;
         public float Tick;
 

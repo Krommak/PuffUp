@@ -21,13 +21,6 @@ namespace Game
         {
             _screenSettings.ApplySettings();
 
-            var instance = new Player();
-            instance.Increase(500);
-
-            Container.Bind<Player>()
-                .FromInstance(instance)
-                .AsSingle();
-
             Container.Bind<StaticData>()
                 .FromInstance(_staticData)
                 .AsSingle();
