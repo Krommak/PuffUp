@@ -1,3 +1,5 @@
+using Game.MonoBehaviours;
+
 namespace Game.Signals
 {
     public interface ISignal
@@ -12,31 +14,50 @@ namespace Game.Signals
     {
     }
 
-    public struct LevelLoaded : ISignal
-    {
-    }
-
     public struct NewBubble : ISignal
     {
+        public BubbleMono CreatedBubble;
     }
 
     public struct BubbleComplete: ISignal
     {
-        public int ObjectID;
-        public int BubbleScore;
+        public BubbleMono CompletedBubble;
+    }
+
+    public struct LevelLoaded : ISignal
+    {
     }
 
     public struct LoadLevel : ISignal
     {
     }
 
-    public struct ConnectToStack : ISignal
+    public struct UILoaded : ISignal
     {
-        public int ObjectID;
+        public UIMono UIMono;
+    }
+    
+    public struct UpdateUI : ISignal
+    {
+    }
+
+    public struct ContactWithObject : ISignal
+    {
+        public BubbleMono ContactedMono;
+        public int OtherObjectID;
+        public bool IsPadlock;
     }
 
     public struct UpdatePadlockScore : ISignal
     {
         public int AddedScore;
+    }
+
+    public struct Win : ISignal
+    {
+    }
+
+    public struct Lose : ISignal
+    {
     }
 }

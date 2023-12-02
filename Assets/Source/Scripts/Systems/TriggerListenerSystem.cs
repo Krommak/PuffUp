@@ -1,5 +1,3 @@
-#pragma warning disable 0693
-
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,12 +9,10 @@ namespace Game.Systems
     public static class TriggerListenerSystem
     {
         private static Dictionary<Type, List<object>> _listenersBySignal;
-        private static Dictionary<Type, List<object>> _listenersWithDataBySignal;
 
         public static void AddListener<T>(IListener<T> listener) where T : ISignal
         {
             _listenersBySignal ??= new Dictionary<Type, List<object>>();
-            _listenersWithDataBySignal ??= new Dictionary<Type, List<object>>();
 
             var type = typeof(T);
 
@@ -61,7 +57,6 @@ namespace Game.Systems
         public static void ClearAllListeners()
         {
             _listenersBySignal.Clear();
-            _listenersWithDataBySignal.Clear();
         }
     }
     

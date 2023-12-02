@@ -12,13 +12,18 @@ namespace Game.Systems
         private StaticData _staticData;
         private RuntimeData _runtimeData;
 
-        private LevelMono _loadedLevel;
-
         [Inject]
         public LevelSystem(StaticData staticData, RuntimeData runtimeData)
         {
             _staticData = staticData;
             _runtimeData = runtimeData;
+        }
+
+        public void Initialize()
+        {
+            TriggerListenerSystem.AddListener(this);
+
+            LoadCurrent();
         }
 
         private void LoadCurrent()
@@ -35,20 +40,11 @@ namespace Game.Systems
 
             var levelSettings = _staticData.LevelsSettings.Levels[index];
 
-            _loadedLevel = GameObject.Instantiate<LevelMono>(levelSettings.LevelPrefab);
-
-            _loadedLevel.Init();
-
+            _runtimeData.LoadedLevel = GameObject.Instantiate<LevelMono>(levelSettings.LevelPrefab);
+            _runtimeData.LoadedLevel.Init();
             _runtimeData.LevelData = levelSettings;
 
             TriggerListenerSystem.Trigger(new LevelLoaded());
-        }
-
-        public void Initialize()
-        {
-            TriggerListenerSystem.AddListener(this);
-
-            LoadCurrent();
         }
 
         void IListener<LoadLevel>.Trigger(LoadLevel loadLevel)

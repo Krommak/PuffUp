@@ -5,7 +5,6 @@ public class SystemsInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        
         Container.BindInterfacesAndSelfTo<InputSystem>()
             .AsSingle();
         Container.BindInterfacesAndSelfTo<CreateBubbleSystem>()
@@ -15,6 +14,10 @@ public class SystemsInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<SetBubbleColorSystem>()
             .AsSingle();
         Container.BindInterfacesAndSelfTo<StackSystem>()
-            .AsSingle(); 
+            .AsSingle();
+        Container.BindInterfacesAndSelfTo<LoseSystem>()
+            .AsSingle();
+        Container.BindInterfacesAndSelfTo<MoneySystem>()
+            .AsSingle();
     }
 }

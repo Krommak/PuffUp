@@ -1,7 +1,6 @@
 using Game.Data;
 using Game.Signals;
 using Game.Systems;
-using NaughtyAttributes;
 using System;
 using TMPro;
 using UnityEngine;
@@ -18,36 +17,46 @@ namespace Game.MonoBehaviours
         public SpecialColor Color;
         public bool IsComplete = false;
         public bool OnPause = false;
+        public bool InStack = false;
 
-        [SerializeField, Layer]
-        private int _padlockLayer;
+        [SerializeField]
+        private LayerMask _padlockLayers;
 
         [SerializeField]
         private Collider2D _collider2D;
         [SerializeField] 
         private ParticleSystem[] _particleComplete;
-        public bool _inStack = false;
-
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            CheckContacts();
+            CheckContactsWithObstacles();
+            CheckContactWithPadlock(collision.otherCollider);
+        }
 
-            if (!_inStack && IsComplete && collision.gameObject.layer == _padlockLayer)
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            CheckContactWithPadlock(other);
+        }
+
+        private void CheckContactWithPadlock(Collider2D other)
+        {
+            if (!InStack && IsComplete)
             {
-                TriggerListenerSystem.Trigger(new ConnectToStack()
+                TriggerListenerSystem.Trigger(new ContactWithObject()
                 {
-                    ObjectID = this.gameObject.GetInstanceID()
+                    ContactedMono = this,
+                    OtherObjectID = other.gameObject.GetInstanceID(),
+                    IsPadlock = (_padlockLayers.value & (1 << other.gameObject.layer)) == 0
                 });
             }
         }
 
         private void OnCollisionExit2D(Collision2D collision)
         {
-            CheckContacts();
+            CheckContactsWithObstacles();
         }
 
-        private void CheckContacts()
+        private void CheckContactsWithObstacles()
         {
             if (IsComplete) return;
 

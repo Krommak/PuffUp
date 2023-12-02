@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Zlodey;
 
 namespace Game
 {
@@ -11,7 +10,7 @@ namespace Game
         //    set => PlayerPrefs.SetInt("TurnCount", value);
         //}
 
-        public IntValue Money;
+        public int Money;
 
         public int CurrentLevel
         {

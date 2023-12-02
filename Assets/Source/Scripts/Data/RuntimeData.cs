@@ -14,37 +14,15 @@ namespace Game.Data
         }
 
         public Player Player;
-        public int LevelNum;
         public Level LevelData;
         //public GameState GameState;
-        public float LevelStartedTime;
+        public float LevelStartedTime = 5;
+        
+        public LevelMono LoadedLevel;
 
         public Vector3 MousePosition;
         public float DelayTime;
-        public int LevelRoom = -1;
-
-        public Unlocker Unlocker;
-
-        public BubbleMono ScaledBubble;
-
-        public bool ChestActivated;
 
         public MaterialPropertyBlock Block;
-    }
-
-    public class Unlocker
-    {
-        private int ValueForUnlock;
-        private int CurrentValue;
-        private Action OnUnlock;
-
-        public void Increase(int value)
-        {
-            CurrentValue += value;
-            if(ValueForUnlock <= CurrentValue)
-            {
-                OnUnlock?.Invoke();
-            }
-        }
     }
 }

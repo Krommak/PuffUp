@@ -1,5 +1,7 @@
+using DG.Tweening;
 using Game.Signals;
 using Game.Systems;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -7,8 +9,9 @@ namespace Game.MonoBehaviours
 {
     public class LevelMono : MonoBehaviour, IListener<UpdatePadlockScore>
     {
-        [SerializeField]
-        private int _targetValueForWin;
+        public int TargetValueForWin;
+        public Renderer[] Obstacles;
+
         [SerializeField]
         private TMP_Text _padLockText;
 
@@ -16,9 +19,9 @@ namespace Game.MonoBehaviours
 
         public void Init()
         {
-            _currentValue = _targetValueForWin;
+            _currentValue = TargetValueForWin;
             
-            UpdateText();
+            UpdateScoreText();
             
             TriggerListenerSystem.AddListener<UpdatePadlockScore>(this);
         }
@@ -27,17 +30,28 @@ namespace Game.MonoBehaviours
         {
             _currentValue -= signal.AddedScore;
             
-            UpdateText();
+            UpdateScoreText();
             
             if(_currentValue <= 0)
             {
-
+                TriggerListenerSystem.Trigger(new Win());
             }
         }
 
-        private void UpdateText()
+        private void UpdateScoreText()
         {
-            _padLockText.text = _currentValue.ToString();
+            var sequence = DOTween.Sequence(this);
+
+            var startValue = int.Parse(_padLockText.text);
+            var duration = MathF.Abs(_currentValue - startValue) / 5;
+            var tweener = DOTween.To(() =>
+                _padLockText.text,
+                x => _padLockText.text =
+                ((int)Mathf.MoveTowards(int.Parse(_padLockText.text), _currentValue, duration)).ToString(),
+                _currentValue.ToString(), duration);
+
+            sequence.Join(tweener);
+            sequence.Play();
         }
 
         private void OnDestroy()

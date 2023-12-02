@@ -1,4 +1,5 @@
 using Game.Data;
+using Game.MonoBehaviours;
 using Game.Signals;
 using UnityEngine;
 using Zenject;
@@ -6,11 +7,12 @@ using Zenject;
 namespace Game.Systems
 {
     public sealed class ScaleBubbleSystem : IInitializable, ITickable,
-        IListener<NewBubble>, IListener<MouseUp>
+        IListener<NewBubble>, IListener<MouseUp>, ILateDisposable
     {
         private readonly RuntimeData _runtimeData;
 
         private bool _needScaling;
+        private BubbleMono _scaledBubble;
 
         [Inject]
         public ScaleBubbleSystem(RuntimeData runtimeData)
@@ -24,44 +26,51 @@ namespace Game.Systems
             TriggerListenerSystem.AddListener<MouseUp>(this);
         }
 
+        public void LateDispose()
+        {
+            TriggerListenerSystem.RemoveListener<NewBubble>(this);
+            TriggerListenerSystem.RemoveListener<MouseUp>(this);
+        }
+
         public void Tick()
         {
             if (!_needScaling 
                 || Time.time < _runtimeData.DelayTime
-                || !_runtimeData.ScaledBubble
-                || _runtimeData.ScaledBubble.OnPause)
+                || !_scaledBubble
+                || _scaledBubble.OnPause)
             {
                 return;
             }
 
-            var bubble = _runtimeData.ScaledBubble;
+            _scaledBubble.Score++;
 
-            bubble.Score++;
-
-            bubble.ScoreText.text = bubble.Score.ToString();
-            var newValue = bubble.Score * bubble.Difference;
-            var localScale = bubble.transform.localScale;
+            _scaledBubble.ScoreText.text = _scaledBubble.Score.ToString();
+            var newValue = _scaledBubble.Score * _scaledBubble.Difference;
+            var localScale = _scaledBubble.transform.localScale;
             localScale.Set(newValue, newValue, 0.23f);
-            bubble.transform.localScale = localScale;
+            _scaledBubble.transform.localScale = localScale;
         }
 
         void IListener<NewBubble>.Trigger(NewBubble bubble)
         {
             _needScaling = true;
+            _scaledBubble = bubble.CreatedBubble;
         }
 
         void IListener<MouseUp>.Trigger(MouseUp bubble)
         {
             _needScaling = false;
 
-            if(_runtimeData.ScaledBubble)
-                _runtimeData.ScaledBubble.IsComplete = true;
-
-            TriggerListenerSystem.Trigger(new BubbleComplete()
+            if(_scaledBubble)
             {
-                ObjectID = _runtimeData.ScaledBubble.gameObject.GetInstanceID(),
-                BubbleScore = _runtimeData.ScaledBubble.Score
-            });
+                _scaledBubble.IsComplete = true;
+
+                TriggerListenerSystem.Trigger(new BubbleComplete()
+                {
+                    CompletedBubble = _scaledBubble
+                });
+                _scaledBubble = null;
+            }
         }
     }
 }

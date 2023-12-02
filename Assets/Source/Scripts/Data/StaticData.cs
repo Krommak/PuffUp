@@ -1,4 +1,5 @@
 ﻿using Game.MonoBehaviours;
+using NaughtyAttributes;
 using System;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ namespace Game.Data
     {
         [SerializeField]
         public string GameSceneName;
+        [SerializeField]
+        public string UISceneName;
 
         [Header("Material for Sphere")]
 
@@ -18,19 +21,13 @@ namespace Game.Data
         [Header("Levels")]
         public LevelsSettings LevelsSettings;
 
-        //[Header("Required prefabs")]        
-        //      public UI UI;
-
-        //[Layer] public int IgnoreLayer;
-
-        [Header("Gameplay variable")] public float TimeToWinLevel = 1; //для примера - время в секундах после которого уровень выигрывается
+        [Header("Gameplay variable")] 
+        public float TimeToWinLevel = 1; //для примера - время в секундах после которого уровень выигрывается
         public BubbleMono PrefabBubble;
-        public SpecialColor[] Colors;
+
         public float Tick;
 
         public int StartTurn;
-
-        //public LevelData DefaultLevel;
 
         public GameObject PrefabCoin;
 
@@ -40,6 +37,8 @@ namespace Game.Data
     [Serializable]
     public struct SpecialColor
     {
+        [Layer]
+        public int LayerColor;
         public Color BaseColor;
         public Color ShadowColor;
     }
@@ -55,9 +54,7 @@ namespace Game.Data
     {
         public Vector2 ClampSize;
         public LevelMono LevelPrefab;
-        public SpecialColor BackgroundColor;
-        public SpecialColor WallColor;
-        public SpecialColor ObstacleColor;
+        public ColorScheme ColorScheme;
         public int StartTurn;
     }
 }

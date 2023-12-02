@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Game.Systems
 {
-    public class CreateBubbleSystem : IListener<MouseDown>, IInitializable
+    public class CreateBubbleSystem : IListener<MouseDown>, IInitializable, ILateDisposable
     {
         private RuntimeData _runtimeData;
         private StaticData _staticData;
@@ -20,6 +20,11 @@ namespace Game.Systems
         public void Initialize()
         {
             TriggerListenerSystem.AddListener<MouseDown>(this);
+        }
+
+        public void LateDispose()
+        {
+            TriggerListenerSystem.RemoveListener<MouseDown>(this);
         }
 
         void IListener<MouseDown>.Trigger(MouseDown down)
@@ -63,8 +68,11 @@ namespace Game.Systems
 
             _runtimeData.Player.TurnCount--;
 
-            _runtimeData.ScaledBubble = Object.Instantiate(_staticData.PrefabBubble, positionWorld, Quaternion.identity);
-            TriggerListenerSystem.Trigger(new NewBubble());
+            var newBubble = Object.Instantiate(_staticData.PrefabBubble, positionWorld, Quaternion.identity);
+            TriggerListenerSystem.Trigger(new NewBubble()
+            {
+                CreatedBubble = newBubble,
+            });
         }
     }
 }

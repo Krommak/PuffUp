@@ -14,22 +14,34 @@ namespace Game
         [SerializeField]
         private StaticData _staticData;
 
-        [SerializeField]
-        private RuntimeData _runtimeData;
-
         public override void InstallBindings()
         {
             _screenSettings.ApplySettings();
 
+            BindData();
+            BindSystems();
+        }
+
+        private void BindData()
+        {
             Container.Bind<StaticData>()
                 .FromInstance(_staticData)
-                .AsSingle();
+                .AsSingle()
+                .NonLazy();
 
             Container.Bind<RuntimeData>()
-                .FromInstance(_runtimeData)
-                .AsSingle();
+                .FromNew()
+                .AsSingle()
+                .NonLazy();
+        }
 
+        private void BindSystems()
+        {
+            Container.BindInterfacesAndSelfTo<LevelInitializeSystem>()
+                .AsSingle();
             Container.BindInterfacesAndSelfTo<LevelSystem>()
+                .AsSingle();
+            Container.BindInterfacesAndSelfTo<UISystem>()
                 .AsSingle();
         }
 
