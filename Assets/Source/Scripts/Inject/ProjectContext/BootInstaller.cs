@@ -37,6 +37,10 @@ namespace Game
 
         private void BindSystems()
         {
+            Container.BindInterfacesAndSelfTo<GameStateSystem>()
+                .AsSingle();
+            Container.BindInterfacesAndSelfTo<LevelMovementSystem>()
+                .AsSingle();
             Container.BindInterfacesAndSelfTo<LevelInitializeSystem>()
                 .AsSingle();
             Container.BindInterfacesAndSelfTo<LevelSystem>()

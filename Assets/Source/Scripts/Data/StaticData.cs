@@ -32,6 +32,9 @@ namespace Game.Data
         public GameObject PrefabCoin;
 
         public MaterialPropertyBlock MaterialPropertyBlock;
+
+        public Sprite[] PositiveEmoji;
+        public Sprite[] NegativeEmoji;
     }
 
     [Serializable]
@@ -53,7 +56,7 @@ namespace Game.Data
     public class Level
     {
         public Vector2 ClampSize;
-        public LevelMono LevelPrefab;
+        public LevelMono LevelMono;
         public ColorScheme ColorScheme;
         public int StartTurn;
     }

@@ -1,62 +1,62 @@
-using DG.Tweening;
 using Game.Signals;
 using Game.Systems;
-using System;
-using TMPro;
 using UnityEngine;
 
 namespace Game.MonoBehaviours
 {
-    public class LevelMono : MonoBehaviour, IListener<UpdatePadlockScore>
+    public class LevelMono : MonoStateListener, IListener<NextLevelPart>
     {
-        public int TargetValueForWin;
-        public Renderer[] Obstacles;
+        public GameObject[] Parts;
+        public float LevelPartStepY;
+        public float Duration = 1f;
+        public int CurrentPart { get; private set; } = -1;
 
-        [SerializeField]
-        private TMP_Text _padLockText;
-
-        private int _currentValue;
-
-        public void Init()
+        [OnState(GameState.LoadingExit)]
+        private void OnState()
         {
-            _currentValue = TargetValueForWin;
-            
-            UpdateScoreText();
-            
-            TriggerListenerSystem.AddListener<UpdatePadlockScore>(this);
+            TriggerListenerSystem.AddListener<NextLevelPart>(this);
+            ActivateNext();
         }
 
-        void IListener<UpdatePadlockScore>.Trigger(UpdatePadlockScore signal)
+        protected override void OnDisable()
         {
-            _currentValue -= signal.AddedScore;
+            base.OnDisable();
+
+            TriggerListenerSystem.RemoveListener<NextLevelPart>(this);
+        }
+
+        public void Trigger(NextLevelPart signal)
+        {
+            ActivateNext();
+        }
+
+        private void ActivateNext()
+        {
+            CurrentPart++;
             
-            UpdateScoreText();
-            
-            if(_currentValue <= 0)
+            if(Parts.Length >= CurrentPart)
             {
-                TriggerListenerSystem.Trigger(new Win());
+                Parts[CurrentPart].SetActive(true);
+                TriggerListenerSystem.Trigger(new LevelMoveToCamera() 
+                {
+                    LevelMono = this,
+                    OnEndAction = () =>
+                    {
+                        if (CurrentPart != 0)
+                        {
+                            Parts[CurrentPart - 1].SetActive(false);
+                        }
+                    }
+                });
             }
-        }
+            else
+            {
+                TriggerListenerSystem.Trigger(new SetGameState()
+                {
+                    GameState = GameState.WinOpen
+                });
+            }
 
-        private void UpdateScoreText()
-        {
-            var sequence = DOTween.Sequence(this);
-
-            var startValue = int.Parse(_padLockText.text);
-            var duration = MathF.Abs(_currentValue - startValue) / 5;
-            var tweener = DOTween.To(() =>
-                _padLockText.text,
-                x => _padLockText.text =
-                ((int)Mathf.MoveTowards(int.Parse(_padLockText.text), _currentValue, duration)).ToString(),
-                _currentValue.ToString(), duration);
-
-            sequence.Join(tweener);
-            sequence.Play();
-        }
-
-        private void OnDestroy()
-        {
-            TriggerListenerSystem.RemoveListener<UpdatePadlockScore>(this);
         }
     }
 }

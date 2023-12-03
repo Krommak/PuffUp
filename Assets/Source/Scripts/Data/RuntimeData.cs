@@ -1,4 +1,3 @@
-using Game.MonoBehaviours;
 using System;
 using UnityEngine;
 
@@ -18,8 +17,6 @@ namespace Game.Data
         //public GameState GameState;
         public float LevelStartedTime = 5;
         
-        public LevelMono LoadedLevel;
-
         public Vector3 MousePosition;
         public float DelayTime;
 

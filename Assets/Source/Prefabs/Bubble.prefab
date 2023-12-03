@@ -123,7 +123,7 @@ Rigidbody2D:
   m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: -0.1
+  m_GravityScale: -0.5
   m_Material: {fileID: 6200000, guid: 40842d3d0688be64c89f22ce868acc3b, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
@@ -144,23 +144,22 @@ MonoBehaviour:
   Renderer: {fileID: 8789148000198795256}
   ScoreText: {fileID: 7048567212624373511}
   Score: 0
-  Difference: 0.05
+  Difference: 0.025
   Particle:
   - {fileID: 6249169452311712651}
   - {fileID: 4087180056536651365}
+  ParticleComplete:
+  - {fileID: 4150939861236252393}
   Color:
     LayerColor: 0
     BaseColor: {r: 0, g: 0, b: 0, a: 0}
     ShadowColor: {r: 0, g: 0, b: 0, a: 0}
-  IsComplete: 0
   OnPause: 0
   InStack: 0
   _padlockLayers:
     serializedVersion: 2
     m_Bits: 0
   _collider2D: {fileID: 8315667773207781679}
-  _particleComplete:
-  - {fileID: 4150939861236252393}
 --- !u!114 &-2557784253379989746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5237,7 +5236,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 470264, guid: 01949c12a89de284792dc4b7b7128404, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.45
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 470264, guid: 01949c12a89de284792dc4b7b7128404, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5368,7 +5367,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1530042284760763183, guid: 5811644a7a9f2fe4fbe2cb261bbf4eb3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.5
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 1530042284760763183, guid: 5811644a7a9f2fe4fbe2cb261bbf4eb3, type: 3}
       propertyPath: m_LocalRotation.w

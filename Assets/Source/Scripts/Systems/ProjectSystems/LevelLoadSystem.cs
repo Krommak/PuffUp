@@ -28,6 +28,10 @@ namespace Game.Systems
 
         private void LoadCurrent()
         {
+            TriggerListenerSystem.Trigger(new SetGameState()
+            {
+                GameState = GameState.LoadingStart,
+            });
             var level = _runtimeData.Player.CurrentLevel;
 
             var totalLevels = _staticData.LevelsSettings.Levels.Length;
@@ -40,11 +44,14 @@ namespace Game.Systems
 
             var levelSettings = _staticData.LevelsSettings.Levels[index];
 
-            _runtimeData.LoadedLevel = GameObject.Instantiate<LevelMono>(levelSettings.LevelPrefab);
-            _runtimeData.LoadedLevel.Init();
             _runtimeData.LevelData = levelSettings;
 
-            TriggerListenerSystem.Trigger(new LevelLoaded());
+            GameObject.Instantiate<LevelMono>(levelSettings.LevelMono);
+
+            TriggerListenerSystem.Trigger(new SetGameState()
+            {
+                GameState = GameState.LoadingExit,
+            });
         }
 
         void IListener<LoadLevel>.Trigger(LoadLevel loadLevel)

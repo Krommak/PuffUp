@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &192820712 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 46881503314664871, guid: 92f523857caa34d42bf6a03502794bd6, type: 3}
-  m_PrefabInstance: {fileID: 46881503403403343}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &309330585
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,11 +529,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Collider: {fileID: 1049205380}
   Renderer: {fileID: 1049205381}
---- !u!4 &1098739180 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 46881504488850851, guid: 92f523857caa34d42bf6a03502794bd6, type: 3}
-  m_PrefabInstance: {fileID: 46881503403403343}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1166852898
 GameObject:
   m_ObjectHideFlags: 0
@@ -811,7 +801,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1098739180}
+  - {fileID: 46881503403403344}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -850,8 +840,8 @@ MonoBehaviour:
   PrefabRoot: {fileID: 729528656069312700, guid: 29fbc7cd54ef4374a9555e484f24a903, type: 3}
   PrefabConnector: {fileID: 4198925042586155238, guid: 9e1832077be0d824dbce9d0a77c902da, type: 3}
   PrefabGate: {fileID: 6840285349194612407, guid: 2beb3c908ac89d14695c9f9e5c680c36, type: 3}
-  ConnectorA: {fileID: 192820712}
-  ConnectorB: {fileID: 1841675274}
+  ConnectorA: {fileID: 0}
+  ConnectorB: {fileID: 0}
   OffsetConnector: {x: 0.7, y: 0, z: 0}
   Offset: {x: 0.35, y: 0, z: 0}
   Step: 0.35
@@ -970,11 +960,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1789421540}
   m_Enabled: 1
---- !u!4 &1841675274 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 46881504816583749, guid: 92f523857caa34d42bf6a03502794bd6, type: 3}
-  m_PrefabInstance: {fileID: 46881503403403343}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1891735396
 GameObject:
   m_ObjectHideFlags: 0
@@ -1333,8 +1318,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: RopeOld
       objectReference: {fileID: 0}
+    - target: {fileID: 4318111258296602055, guid: 92f523857caa34d42bf6a03502794bd6, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4318111258296602055, guid: 92f523857caa34d42bf6a03502794bd6, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4318111258383362050, guid: 92f523857caa34d42bf6a03502794bd6, type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4318111258383362050, guid: 92f523857caa34d42bf6a03502794bd6, type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92f523857caa34d42bf6a03502794bd6, type: 3}
+--- !u!4 &46881503403403344 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4994473783611189722, guid: 92f523857caa34d42bf6a03502794bd6, type: 3}
+  m_PrefabInstance: {fileID: 46881503403403343}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1296583251478493634
 PrefabInstance:
   m_ObjectHideFlags: 0

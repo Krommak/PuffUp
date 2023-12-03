@@ -58,7 +58,7 @@ MonoBehaviour:
     LevelsSettings:
       Levels:
       - ClampSize: {x: 2.75, y: 4.5}
-        LevelPrefab: {fileID: 8949854445233190385, guid: 1f8c1090410b1474dbd72004cced9d30, type: 3}
+        LevelMono: {fileID: 8949854445233190385, guid: 1f8c1090410b1474dbd72004cced9d30, type: 3}
         ColorScheme:
           _defaultColor:
             LayerColor: 0

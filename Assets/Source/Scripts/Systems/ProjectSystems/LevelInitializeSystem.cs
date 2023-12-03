@@ -6,7 +6,7 @@ using Zlodey;
 
 namespace Game.Systems
 {
-    public class LevelInitializeSystem : IInitializable, IListener<LevelLoaded>
+    public class LevelInitializeSystem : IInitializable, IListener<LevelPartLoaded>
     {
         private RuntimeData _runtimeData;
 
@@ -18,15 +18,14 @@ namespace Game.Systems
 
         public void Initialize()
         {
-            TriggerListenerSystem.AddListener<LevelLoaded>(this);
+            TriggerListenerSystem.AddListener<LevelPartLoaded>(this);
         }
 
-        void IListener<LevelLoaded>.Trigger(LevelLoaded loadLevel)
+        void IListener<LevelPartLoaded>.Trigger(LevelPartLoaded loadLevel)
         {
             var level = _runtimeData.LevelData;
-            var levelMono = _runtimeData.LoadedLevel;
 
-            foreach (var render in levelMono.Obstacles)
+            foreach (var render in loadLevel.LevelPart.Obstacles)
             {
                 render.GetPropertyBlock(_runtimeData.Block);
 

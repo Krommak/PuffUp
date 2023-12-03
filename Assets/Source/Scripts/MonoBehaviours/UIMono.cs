@@ -1,3 +1,4 @@
+using Game.Data;
 using Game.Signals;
 using Game.Systems;
 using TMPro;
@@ -10,8 +11,12 @@ public class UIMono : MonoBehaviour
     public TMP_Text MovesCounter;
     public Button SoundButton;
 
+    public Image RewardBackground;
+    public TMP_Text RewardText;
+
     public RectTransform WinPanel;
     public RectTransform LosePanel;
+    public Renderer RewardPanel;
 
     public RectTransform[] AnimatedElementsTransform;
 
@@ -21,5 +26,10 @@ public class UIMono : MonoBehaviour
         {
             UIMono = this
         });
+    }
+
+    public void InitWinLosePanels(RuntimeData runtimeData, StaticData staticData)
+    {
+
     }
 }

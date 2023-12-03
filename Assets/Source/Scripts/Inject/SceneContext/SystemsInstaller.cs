@@ -1,3 +1,5 @@
+using Game.Signals;
+using Game;
 using Game.Systems;
 using Zenject;
 
@@ -17,7 +19,11 @@ public class SystemsInstaller : MonoInstaller
             .AsSingle();
         Container.BindInterfacesAndSelfTo<LoseSystem>()
             .AsSingle();
+        Container.BindInterfacesAndSelfTo<WinSystem>()
+            .AsSingle(); 
         Container.BindInterfacesAndSelfTo<MoneySystem>()
+            .AsSingle();
+        Container.BindInterfacesAndSelfTo<AddMovesForPlayerSystem>()
             .AsSingle();
     }
 }

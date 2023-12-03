@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Game.Systems
 {
-    public sealed class ScaleBubbleSystem : IInitializable, ITickable,
+    public sealed class EnemyMovementSystem : IInitializable, ITickable,
         IListener<NewBubble>, IListener<MouseUp>, ILateDisposable
     {
         private readonly RuntimeData _runtimeData;
@@ -15,7 +15,7 @@ namespace Game.Systems
         private BubbleMono _scaledBubble;
 
         [Inject]
-        public ScaleBubbleSystem(RuntimeData runtimeData)
+        public EnemyMovementSystem(RuntimeData runtimeData)
         {
             _runtimeData = runtimeData;
         }

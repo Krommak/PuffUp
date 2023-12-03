@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game.Extentions;
 using Game.Signals;
+using System.Linq;
 
 namespace Game.Systems
 {
@@ -31,14 +32,16 @@ namespace Game.Systems
 
         public static void Trigger<T>(T signal) where T : struct, ISignal
         {
+            _listenersBySignal ??= new Dictionary<Type, List<object>>();
+
             var type = typeof(T);
             if (_listenersBySignal.ContainsKey(type))
             {
-                _listenersBySignal[type].ForEach(x =>
+                foreach (var item in _listenersBySignal[type].ToList())
                 {
-                    var listener = x as IListener<T>;
+                    var listener = item as IListener<T>;
                     listener.Trigger(signal);
-            });
+                }
                 return;
             }
 

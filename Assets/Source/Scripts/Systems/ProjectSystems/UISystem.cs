@@ -1,20 +1,18 @@
 using DG.Tweening;
 using Game.Data;
-using Game.Extentions;
 using Game.Signals;
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
-using Zlodey;
 
 namespace Game.Systems
 {
     public class UISystem : IInitializable,
         IListener<UpdateUI>, IListener<UILoaded>,
-        IListener<Win>, IListener<Lose>
+        IListener<Lose>, IListener<ShowRewardPanel>
     {
         private StaticData _staticData;
         private RuntimeData _runtimeData;
@@ -29,9 +27,9 @@ namespace Game.Systems
 
         public void Initialize()
         {
+            TriggerListenerSystem.AddListener<ShowRewardPanel>(this);
             TriggerListenerSystem.AddListener<UpdateUI>(this);
             TriggerListenerSystem.AddListener<UILoaded>(this);
-            TriggerListenerSystem.AddListener<Win>(this);
             TriggerListenerSystem.AddListener<Lose>(this);
 
             SceneManager.LoadSceneAsync(_staticData.UISceneName, LoadSceneMode.Additive);
@@ -48,14 +46,14 @@ namespace Game.Systems
             InitUI();
         }
 
-        void IListener<Win>.Trigger(Win update)
-        {
-            UpdateUI();
-        }
-
         void IListener<Lose>.Trigger(Lose signal)
         {
             InitUI();
+        }
+
+        void IListener<ShowRewardPanel>.Trigger(ShowRewardPanel signal)
+        {
+            ShowRewardPanel(signal.MovesCount, 3f);
         }
 
         private void InitUI()
@@ -65,44 +63,10 @@ namespace Game.Systems
 
         private void UpdateUI()
         {
-            List<Tweener> tweeners = new List<Tweener>();
-
-            var startCounter = int.Parse(_UI.GoldCounter.text);
-            var finalCounter = _runtimeData.Player.Money;
-
-            if (finalCounter - startCounter != 0)
-            {
-                var duration = MathF.Abs(finalCounter - startCounter) / 2;
-                var tweener = DOTween.To(() =>
-                    _UI.GoldCounter.text,
-                    x => _UI.GoldCounter.text =
-                    ((int)Mathf.MoveTowards(int.Parse(_UI.GoldCounter.text), finalCounter, duration)).ToString(),
-                    finalCounter.ToString(), duration);
-                tweeners.Add(tweener);
-            }
-
-            var startMoves = int.Parse(_UI.MovesCounter.text);
-            var finalMoves = _runtimeData.Player.TurnCount;
-            if (finalMoves - startMoves != 0)
-            {
-                var duration = MathF.Abs(finalMoves - startMoves) / 2;
-                var tweener = DOTween.To(() =>
-                    _UI.MovesCounter.text,
-                    x => _UI.MovesCounter.text =
-                    ((int)Mathf.MoveTowards(int.Parse(_UI.MovesCounter.text), finalMoves, duration)).ToString(),
-                    finalCounter.ToString(), duration);
-                tweeners.Add(tweener);
-            }
-
-            if (tweeners.Count != 0)
-            {
-                var sequence = DOTween.Sequence(this);
-                foreach (var item in tweeners)
-                {
-                    sequence.Join(item);
-                }
-                sequence.Play();
-            }
+            var sequence = DOTween.Sequence(this);
+            sequence.Join(UpdateTextCounter(_UI.GoldCounter, _runtimeData.Player.Money));
+            sequence.Join(UpdateTextCounter(_UI.MovesCounter, _runtimeData.Player.TurnCount));
+            sequence.Play();
         }
 
         private IEnumerator AnimateHeader(RectTransform[] rects, Action onEndCallback)
@@ -128,9 +92,36 @@ namespace Game.Systems
             onEndCallback?.Invoke();
         }
 
-        private IEnumerator ShowWinPanel()
+        private void ShowRewardPanel(int reward, float duration)
         {
-            yield return new WaitForSeconds(0.2f);
+            var text = _UI.RewardText;
+            var background = _UI.RewardBackground;
+            text.text = $"+{reward} ходов";
+            var sequence = DOTween.Sequence(this);
+
+            var color = background.color;
+
+            sequence.Join(DOTween.To(() => text.alpha, x => text.alpha = x, 1, 2));
+            sequence.Join(background.DOColor(new Color(color.r, color.g, color.b, 1), 2));
+            sequence.Join(UpdateTextCounter(_UI.MovesCounter, _runtimeData.Player.TurnCount));
+            sequence.AppendInterval(duration);
+            sequence.Join(DOTween.To(() => text.alpha, x => text.alpha = x, 0, 1));
+            sequence.Join(background.DOColor(new Color(color.r, color.g, color.b, 0), 2));
+            sequence.Play();
+        }
+
+        private Tweener UpdateTextCounter(TMP_Text text, int final)
+        {
+            var startCounter = int.Parse(text.text);
+
+            var duration = MathF.Abs(final - startCounter) / 2;
+            var tweener = DOTween.To(() =>
+                text.text,
+                x => text.text =
+                ((int)Mathf.MoveTowards(int.Parse(text.text), final, duration)).ToString(),
+                text.ToString(), duration);
+
+            return tweener;
         }
 
         private IEnumerator ShowLosePanel()
