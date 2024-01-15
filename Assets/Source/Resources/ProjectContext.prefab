@@ -1,0 +1,153 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &862421546908428696
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1371085193600785514}
+  - component: {fileID: 784057445571910701}
+  m_Layer: 0
+  m_Name: BootInstaller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1371085193600785514
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862421546908428696}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1057579278187110794}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &784057445571910701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862421546908428696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f4743723192fc54aa75ed299e501274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _screenSettings:
+    _autorotateToPortrait: 1
+    _autorotateToPortraitUpsideDown: 1
+    _autorotateToLandscapeLeft: 0
+    _autorotateToLandscapeRight: 0
+    _orientation: 1
+  _staticData:
+    GameSceneName: GameScene
+    UISceneName: UIScene
+    TransparentMaterial: {fileID: 2100000, guid: 0bd4faaae6d06834ca4caa077d2c0280, type: 2}
+    VoodooMaterial: {fileID: 2100000, guid: ec507d2226066614fa6bc6a39e6015ed, type: 2}
+    LevelsSettings:
+      Levels:
+      - ClampSize: {x: 2.75, y: 4.5}
+        LevelMono: {fileID: 8949854445233190385, guid: 1f8c1090410b1474dbd72004cced9d30, type: 3}
+        ColorScheme:
+          _defaultColor:
+            LayerColor: 0
+            BaseColor: {r: 0.4431373, g: 0.42352945, b: 0.7176471, a: 0}
+            ShadowColor: {r: 0.3542186, g: 0.33908868, b: 0.5660378, a: 0}
+          _colors:
+          - LayerColor: 6
+            BaseColor: {r: 0.45882356, g: 0.43921572, b: 0.7411765, a: 0}
+            ShadowColor: {r: 0.33385274, g: 0.31772876, b: 0.5660378, a: 0}
+          - LayerColor: 7
+            BaseColor: {r: 0.5882353, g: 0.7607844, b: 1, a: 0}
+            ShadowColor: {r: 0.47450984, g: 0.6117647, b: 0.93725497, a: 0}
+          - LayerColor: 8
+            BaseColor: {r: 1, g: 0.77647066, b: 0.9960785, a: 0}
+            ShadowColor: {r: 0.9215687, g: 0.61960787, b: 0.97647065, a: 0}
+          - LayerColor: 10
+            BaseColor: {r: 1, g: 0.54509807, b: 0.13333334, a: 0}
+            ShadowColor: {r: 0.83921576, g: 0.37254903, b: 0.21960786, a: 0}
+          - LayerColor: 10
+            BaseColor: {r: 0.43921572, g: 1, b: 0, a: 0}
+            ShadowColor: {r: 0.27450982, g: 0.7294118, b: 0.13725491, a: 0}
+          - LayerColor: 10
+            BaseColor: {r: 0.16078432, g: 0.76470596, b: 1, a: 0}
+            ShadowColor: {r: 0.13333334, g: 0.45098042, b: 0.82745105, a: 0}
+        StartTurn: 0
+    TimeToWinLevel: 1
+    PrefabBubble: {fileID: 4021895739854897565, guid: 527cef8dfb578fa429de1c4a1c362b57, type: 3}
+    Tick: 0
+    StartTurn: 5
+    PrefabCoin: {fileID: 0}
+--- !u!1 &8140151711157576038
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1057579278187110794}
+  - component: {fileID: 4869695105054549536}
+  m_Layer: 0
+  m_Name: ProjectContext
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1057579278187110794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8140151711157576038}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1371085193600785514}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4869695105054549536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8140151711157576038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4e6589720da476459dc6dd71624b071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectInstallers: []
+  _monoInstallers:
+  - {fileID: 784057445571910701}
+  _installerPrefabs: []
+  _parentNewObjectsUnderContext: 1
+  _editorReflectionBakingCoverageMode: 0
+  _buildsReflectionBakingCoverageMode: 0
+  _settings:
+    _ensureDeterministicDestructionOrderOnApplicationQuit: 0
+    _displayWarningWhenResolvingDuringInstall: 1
+    _validationRootResolveMethod: 0
+    _validationErrorResponse: 0
+    _signalSettings:
+      _defaultSyncMode: 0
+      _missingHandlerDefaultResponse: 2
+      _requireStrictUnsubscribe: 0
+      _defaultAsyncTickPriority: 1
